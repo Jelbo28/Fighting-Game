@@ -29,7 +29,7 @@ public class CameraControl : MonoBehaviour
     {
         FindAveragePosition();
 
-        transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
+        transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition + new Vector3 (0,0,-10), ref m_MoveVelocity, m_DampTime);
     }
 
     private void FindAveragePosition()
@@ -79,7 +79,7 @@ public class CameraControl : MonoBehaviour
 
             Vector3 desiredPosTarget = targetLocalPos - desiredLocalPos;
 
-           size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.y));
+            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.y));
 
            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / m_Camera.aspect);
 

@@ -4,6 +4,8 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     #region Variables
+    [SerializeField]
+    Transform rotate;
     //The numerical ID of the player.
     [SerializeField]
     int PlayerNumber;
@@ -159,9 +161,9 @@ public class PlayerController : MonoBehaviour
     void ScaleCheck()
     {
         if (transform.position.x < enemy.position.x)
-            transform.localScale = new Vector3(1, 1, 1);
+            rotate.transform.localScale = new Vector3(1, 1, 1);
         else if (transform.position.x > enemy.position.x)
-            transform.localScale = new Vector3(-1, 1, 1);
+            rotate.transform.localScale = new Vector3(-1, 1, 1);
     }
     //Timers between attacks and limits to how many times you can attack within an instance.
     void AttackInput()
@@ -269,13 +271,21 @@ public class PlayerController : MonoBehaviour
     //Keeps the animator informed on what's happening.
     void UpdateAnimator()
     {
-        animator.SetBool("Crouch", crouch);
+        animator.SetBool("IsCrouching", crouch);
         animator.SetBool("OnGround", this.onGround);
-        animator.SetBool("Falling", this.falling);
-        animator.SetFloat("Movement", Mathf.Abs(horizontal));
-        animator.SetBool("Attack1", attack[0]);
-        animator.SetBool("Attack2", attack[1]);
-        animator.SetBool("Blocking", blocking);
+        animator.SetBool("Jump", jumpKey);
+        
+        if (Mathf.Abs(horizontal) > 0)
+        {
+            animator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            animator.SetBool("IsWalking", false);
+        }
+        animator.SetBool("Punch", attack[0]);
+        animator.SetBool("Kick", attack[1]);
+        //animator.SetBool("IsBlocking", blocking);
 
     }
     //Detector for being on the ground.
