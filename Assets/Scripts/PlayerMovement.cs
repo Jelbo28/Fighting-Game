@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class Boundary2
-{
-    public float xMin, xMax, yMin, yMax;
-}
-
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -47,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(Keycodes[1]))
         {
-            transform.position += Vector3.right * JumpHeight * Time.deltaTime;
+            transform.position += Vector3.right * moveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(Keycodes[2]) && isGrounded == true)
         {
@@ -60,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void Move ()
+    private void Move()
     {
         Vector3 movement = transform.forward * MovementInputValue * moveSpeed * Time.deltaTime;
 

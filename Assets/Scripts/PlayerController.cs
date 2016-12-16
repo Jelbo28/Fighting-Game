@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
         //if (AICharacter)
         //{
-        //    //Checks if it's an AI character.
+        //    Checks if it's an AI character.
         //    if (!GetComponent<AICharacter>())
         //    {
         //        gameObject.AddComponent<AICharacter>();
@@ -159,9 +159,9 @@ public class PlayerController : MonoBehaviour
     void ScaleCheck()
     {
         if (transform.position.x < enemy.position.x)
-            transform.localScale = new Vector3(-1, 1, 1);
-        else if (transform.position.x > enemy.position.x)
             transform.localScale = new Vector3(1, 1, 1);
+        else if (transform.position.x > enemy.position.x)
+            transform.localScale = new Vector3(-1, 1, 1);
     }
     //Timers between attacks and limits to how many times you can attack within an instance.
     void AttackInput()
@@ -249,6 +249,7 @@ public class PlayerController : MonoBehaviour
 			Vector3 nrDir = new Vector3(enemy.position.x, transform.position.y, 0);
 			Vector3 dir = nrDir - transform.position;
 			pr.GetComponent<Rigidbody2D>().AddForce(dir * 10, ForceMode2D.Impulse);
+
 			specialAttack = false;
 		}
 	}
@@ -268,6 +269,13 @@ public class PlayerController : MonoBehaviour
     //Keeps the animator informed on what's happening.
     void UpdateAnimator()
     {
+        animator.SetBool("Crouch", crouch);
+        animator.SetBool("OnGround", this.onGround);
+        animator.SetBool("Falling", this.falling);
+        animator.SetFloat("Movement", Mathf.Abs(horizontal));
+        animator.SetBool("Attack1", attack[0]);
+        animator.SetBool("Attack2", attack[1]);
+        animator.SetBool("Blocking", blocking);
 
     }
     //Detector for being on the ground.
