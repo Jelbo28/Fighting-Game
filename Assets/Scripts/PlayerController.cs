@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     //Component references
     Rigidbody2D playerRigidbody;
+    [SerializeField]
     Animator animator;
 
     //Movement variables
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         //Getting the components used.
         playerRigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         //Temporarily store the jump force.
         hopForce = jumpForce;
         //Gets all of the players in the scene using tags.
@@ -271,7 +272,7 @@ public class PlayerController : MonoBehaviour
     //Keeps the animator informed on what's happening.
     void UpdateAnimator()
     {
-        animator.SetBool("IsCrouching", crouch);
+        animator.SetBool("Crouch", crouch);
         animator.SetBool("OnGround", this.onGround);
         animator.SetBool("Jump", jumpKey);
         
@@ -283,9 +284,16 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("IsWalking", false);
         }
+        animator.SetFloat("Movement", Mathf.Abs(horizontal));
         animator.SetBool("Punch", attack[0]);
         animator.SetBool("Kick", attack[1]);
-        //animator.SetBool("IsBlocking", blocking);
+        animator.SetInteger("PunchTimes", timesPressed[0]);
+        animator.SetInteger("KickTimes", timesPressed[1]);
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            animator.SetTrigger("Projectile");
+        }
+        animator.SetBool("Blocking", blocking);
 
     }
     //Detector for being on the ground.
