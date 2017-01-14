@@ -19,12 +19,28 @@ public class AudioManager : MonoBehaviour
     public void PlaySound(int clipNumber)
     {
         AS.Stop();
-        if (name == "Songs")
-        {
-            AS.volume = 
-        }
+        //if (name == "Songs")
+        //{
+        //    AS.volume = 
+        //}
         AS.clip = audioClips[clipNumber];
         AS.Play();
+    }
+
+    public void Volume(float level, string setting)
+    {
+        switch (setting)
+        {
+            case "Master":
+                AS.volume = level;
+                break;
+            case "SoundEffects":
+                break;
+
+            default:
+                break;
+        }
+
     }
 
 }
