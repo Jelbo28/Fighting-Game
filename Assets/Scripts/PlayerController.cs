@@ -65,6 +65,11 @@ public class PlayerController : MonoBehaviour
     public bool blocking;
     #endregion
 
+    //void Awake()
+    //{
+    //    ScaleCheck();
+    //}
+
     //Start, what happens at the begining of the scene.
     void Start()
     {

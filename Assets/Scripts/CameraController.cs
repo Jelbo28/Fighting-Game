@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 
-public class CameraControl : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     public float m_DampTime = 0.2f;
     public float m_ScreenEdgeBuffer = 4f;
     public float m_MinSize = 6.5f;
-    /*[HideInInspector]*/public Transform[] m_Targets;
+    /*[HideInInspector]*/
+    [SerializeField]
+    public Transform[] m_Targets;
 
     private Camera m_Camera;
     private float m_ZoomSpeed;
@@ -16,6 +18,15 @@ public class CameraControl : MonoBehaviour
     private void Awake()
     {
         m_Camera = GetComponentInChildren<Camera>();
+
+    }
+
+    void Start()
+    {
+        for (int i = 0; i < m_Targets.Length; i++)
+        {
+            m_Targets[i] = GameObject.Find("Player " + (i + 1)).transform;
+        }
     }
 
     private void FixedUpdate()
@@ -29,7 +40,7 @@ public class CameraControl : MonoBehaviour
     {
         FindAveragePosition();
 
-        transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition + new Vector3 (0,0,-10), ref m_MoveVelocity, m_DampTime);
+        transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition + new Vector3(0, 0, -10), ref m_MoveVelocity, m_DampTime);
     }
 
     private void FindAveragePosition()
@@ -37,22 +48,22 @@ public class CameraControl : MonoBehaviour
         Vector3 averagePos = new Vector3();
         int numTargets = 0;
 
-        for (int i = 0; i < m_Targets.Length; i++) 
+        for (int i = 0; i < m_Targets.Length; i++)
         {
             if (!m_Targets[i].gameObject.activeSelf)
                 continue;
 
             averagePos += m_Targets[i].position;
-        numTargets++;
+            numTargets++;
         }
 
-        if(numTargets > 0 )
+        if (numTargets > 0)
         {
             averagePos /= numTargets;
 
             averagePos.y = transform.position.y;
 
-            m_DesiredPosition = averagePos; 
+            m_DesiredPosition = averagePos;
         }
 
     }
@@ -70,7 +81,7 @@ public class CameraControl : MonoBehaviour
 
         float size = 0f;
 
-        for (int i = 0; i < m_Targets.Length; i++) 
+        for (int i = 0; i < m_Targets.Length; i++)
         {
             if (!m_Targets[i].gameObject.activeSelf)
                 continue;
@@ -81,7 +92,7 @@ public class CameraControl : MonoBehaviour
 
             size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.y));
 
-           size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / m_Camera.aspect);
+            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / m_Camera.aspect);
 
         }
 
