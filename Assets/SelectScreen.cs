@@ -43,18 +43,19 @@ public class SelectScreen : MonoBehaviour
             CheckChar(coordinates);
         }
 
-        if (Input.GetKeyDown(go))
+        if (Input.GetKeyDown(go) && select)
         {
-            Debug.Log("poop");
+            //Debug.Log("poop");
             GM.instance.playerSelect[PlayerNumber - 1] = selection;
             select = false;
+            GM.instance.SelectCharacter();
         }
     }
 
     void MoveCursor()
     {
         Vector3 position = GetComponent<RectTransform>().anchoredPosition;
-        Debug.Log(GetComponent<RectTransform>().anchoredPosition);
+        //Debug.Log(GetComponent<RectTransform>().anchoredPosition);
         horizontal = Input.GetAxis("Horizontal" + PlayerNumber.ToString());
         vertical = Input.GetAxis("Vertical" + PlayerNumber.ToString());
 

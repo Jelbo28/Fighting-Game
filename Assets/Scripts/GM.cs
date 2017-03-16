@@ -20,6 +20,8 @@ public class GM : MonoBehaviour
     [SerializeField]
     public GameObject[] player;
     public string[] playerSelect;
+    private int selectedPlayers = 0;
+    private LoadSceneOnClick levelLoader;
     //private Animator charDisplay;
     //[SerializeField]
     //CameraController cam;
@@ -35,6 +37,7 @@ public class GM : MonoBehaviour
 
     void Setup()
     {
+        levelLoader = GameObject.FindObjectOfType<LoadSceneOnClick>();
         if (GameObject.FindGameObjectWithTag("Level") == true)
         {
             for (int i = 0; i < player.Length; i++)
@@ -65,6 +68,16 @@ public class GM : MonoBehaviour
 	void Update () {
 		
 	}
+
+    public void SelectCharacter()
+    {
+        selectedPlayers++;
+        if (selectedPlayers >= 2)
+        {
+            //Debug.Log("Begin Game");
+            levelLoader.LoadByIndex(2);
+        }
+    }
 
     IEnumerator Begin(int beginTimer)
     {
